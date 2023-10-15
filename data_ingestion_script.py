@@ -1,5 +1,15 @@
 import requests
+import psycopg2
 import pandas as pd
+
+conn = psycopg2.connect(
+    dbname="postgres",
+    user="6",
+    password="dibimbing",
+    host="localhost",
+)
+
+cur = conn.cursor()
 
 url = 'https://api.opencagedata.com/geocode/v1/json'
 api_key = 'a34768ccd55d49cfa29fb5753e2d1486'
@@ -28,3 +38,6 @@ for country in countries:
     components_list.append(country_components)
 
 components_df = pd.DataFrame(components_list)
+
+conn.commit()
+conn.close()
